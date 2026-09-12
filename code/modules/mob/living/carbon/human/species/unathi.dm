@@ -41,6 +41,7 @@
 	flesh_color = "#34AF10"
 	reagent_tag = ORGANIC
 	base_color = "#066000"
+	blood_color = BLOOD_COLOR_LIZARD
 
 	speciesbox = /obj/item/storage/box/survival/species/unathi
 
@@ -114,19 +115,17 @@
 	)
 	autohiss_exempt = list("Синт'Унати")
 
+	max_select_skills = list(
+		/datum/skill/combat/fists = 3,
+		/datum/skill/medical/heal = 1,
+		/datum/skill/medical/genetic = 1,
+	)
+
 /datum/species/unathi/handle_death(gibbed, mob/living/carbon/human/H)
 	H.stop_tail_wagging()
 
 /datum/species/unathi/on_species_gain(mob/living/carbon/human/H)
 	. = ..()
-	add_verb(H, list(
-		/mob/living/carbon/human/proc/emote_wag,
-		/mob/living/carbon/human/proc/emote_swag,
-		/mob/living/carbon/human/proc/emote_hiss_unathi,
-		/mob/living/carbon/human/proc/emote_roar,
-		/mob/living/carbon/human/proc/emote_threat,
-		/mob/living/carbon/human/proc/emote_whip,
-		/mob/living/carbon/human/proc/emote_whip_l))
 	var/datum/action/innate/tail_cut/lash = locate() in H.actions
 	if(!lash)
 		lash = new
@@ -137,14 +136,6 @@
 
 /datum/species/unathi/on_species_loss(mob/living/carbon/human/H)
 	. = ..()
-	remove_verb(H, list(
-		/mob/living/carbon/human/proc/emote_wag,
-		/mob/living/carbon/human/proc/emote_swag,
-		/mob/living/carbon/human/proc/emote_hiss_unathi,
-		/mob/living/carbon/human/proc/emote_roar,
-		/mob/living/carbon/human/proc/emote_threat,
-		/mob/living/carbon/human/proc/emote_whip,
-		/mob/living/carbon/human/proc/emote_whip_l))
 	var/datum/action/innate/tail_cut/lash = locate() in H.actions
 	lash?.Remove(H)
 
@@ -250,9 +241,9 @@
 
 /datum/species/unathi/ashwalker/shaman/on_species_gain(mob/living/carbon/human/owner)
 	. = ..()
-	var/obj/effect/proc_holder/spell/touch/healtouch/healtouch = locate() in owner.mob_spell_list
-	if(!healtouch)
-		owner.AddSpell(new /obj/effect/proc_holder/spell/touch/healtouch)
+	var/datum/action/cooldown/spell/touch/healtouch/shaman/spell = locate() in owner.mob_spell_list
+	if(!spell)
+		owner.AddSpell(new /datum/action/cooldown/spell/touch/healtouch/shaman)
 	var/datum/action/innate/shaman_gps/finder = locate() in owner.actions
 	if(!finder)
 		finder = new
@@ -264,7 +255,7 @@
 
 /datum/species/unathi/ashwalker/shaman/on_species_loss(mob/living/carbon/human/owner)
 	. = ..()
-	owner.RemoveSpell(/obj/effect/proc_holder/spell/touch/healtouch)
+	owner.RemoveSpell(/datum/action/cooldown/spell/touch/healtouch/shaman)
 	var/datum/action/innate/shaman_gps/finder = locate() in owner.actions
 	if(finder)
 		finder.Remove(owner)

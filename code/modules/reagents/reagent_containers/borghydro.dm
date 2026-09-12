@@ -6,7 +6,8 @@
 	icon = 'icons/obj/hypo.dmi'
 	item_state = "hypo"
 	icon_state = "borghypo"
-	possible_transfer_amounts = null
+	has_variable_transfer_amount = FALSE
+	can_empty = FALSE
 	var/mode = 1
 	var/charge_cost = 50
 	var/charge_tick = 0
@@ -24,7 +25,7 @@
 		"hydrocodone" = list('icons/mob/actions/actions.dmi', "magicm"))
 
 /obj/item/reagent_containers/borghypo/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "робо-гипоспрей",
 		GENITIVE = "робо-гипоспрея",
 		DATIVE = "робо-гипоспрею",
@@ -49,7 +50,7 @@
 	upgrade_path = null //no upgrades
 
 /obj/item/reagent_containers/borghypo/syndicate/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "Синди-робо-гипоспрей",
 		GENITIVE = "Синди-робо-гипоспрея",
 		DATIVE = "Синди-робо-гипоспрею",
@@ -69,12 +70,12 @@
 		"pen_acid" = list('icons/mob/screen_corgi.dmi', "tox1"), \
 		"hydrocodone" = list('icons/mob/actions/actions.dmi', "magicm"), \
 		"perfluorodecalin" = list('icons/obj/surgery.dmi', "lungs"), \
-		"calomel" = list('icons/obj/items.dmi', "soap"), \
+		"calomel" = list('icons/obj/janitor.dmi', "soap"), \
 		"oculine" = list('icons/obj/surgery.dmi', "eyes"))
 	upgrade_path = null //no upgrades
 
 /obj/item/reagent_containers/borghypo/upgraded/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "улучшенный робо-гипоспрей",
 		GENITIVE = "улучшенного робо-гипоспрея",
 		DATIVE = "улучшенному робо-гипоспрею",
@@ -85,10 +86,6 @@
 
 /obj/item/reagent_containers/borghypo/upgraded/super
 	bypass_protection = TRUE
-
-/obj/item/reagent_containers/borghypo/empty()
-	set hidden = TRUE
-	return
 
 /obj/item/reagent_containers/borghypo/Initialize(mapload)
 	for(var/R in reagent_ids)
@@ -212,7 +209,7 @@
 	upgrade_path = /obj/item/reagent_containers/borghypo/basic/upgraded
 
 /obj/item/reagent_containers/borghypo/basic/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "стандартный медицинский гипоспрей",
 		GENITIVE = "стандартного медицинского гипоспрея",
 		DATIVE = "стандартному медицинскому гипоспрею",
@@ -228,12 +225,12 @@
 		"salglu_solution" = list('icons/effects/bleed.dmi', "bleed10"), \
 		"epinephrine" = list('icons/obj/surgery.dmi', "heart-on"), \
 		"charcoal" = list('icons/mob/screen_corgi.dmi', "tox1"), \
-		"sal_acid" = list('icons/mob/actions/actions.dmi', "fleshmend"), \
+		"sal_acid" = list('icons/mob/actions/actions.dmi', "red_cross"), \
 		"salbutamol" = list('icons/obj/surgery.dmi', "lungs"))
 	upgrade_path = null //no upgrades
 
 /obj/item/reagent_containers/borghypo/basic/upgraded/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "улучшенный медицинский гипоспрей",
 		GENITIVE = "улучшенного медицинского гипоспрея",
 		DATIVE = "улучшенному медицинскому гипоспрею",
@@ -257,7 +254,7 @@
 	upgrade_path = null //no upgrades
 
 /obj/item/reagent_containers/borghypo/emagged/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "0ШNBK4_IИБ3KT0Я",
 		GENITIVE = "0ШNBK4_IИБ3KT0Я",
 		DATIVE = "0ШNBK4_IИБ3KT0Я",

@@ -12,7 +12,7 @@
 	var/is_GUI_opened = FALSE
 
 /obj/item/mixing_bowl/get_ru_names()
-	return list(
+	return alist(
 		NOMINATIVE = "миска для смешивания",
 		GENITIVE = "миски для смешивания",
 		DATIVE = "миске для смешивания",
@@ -26,7 +26,7 @@
 	create_reagents(100)
 
 /obj/item/mixing_bowl/attackby(obj/item/stack/I, mob/user, params)
-	if(istype(I, /obj/item/soap))
+	if(issoap(I))
 		add_fingerprint(user)
 		if(!dirty)
 			balloon_alert(user, "миска чистая!")
@@ -72,9 +72,9 @@
 		return ATTACK_CHAIN_BLOCKED_ALL
 
 	var/static/list/containers = list(
-		/obj/item/reagent_containers/glass,
-		/obj/item/reagent_containers/food/drinks,
-		/obj/item/reagent_containers/food/condiment,
+		/obj/item/reagent_containers/cup,
+		/obj/item/reagent_containers/cup/glass,
+		/obj/item/reagent_containers/condiment,
 	)
 	if(is_type_in_list(I, containers))
 		add_fingerprint(user)
@@ -192,10 +192,12 @@
 	flags = OPENCONTAINER
 	update_icon(UPDATE_ICON_STATE)
 
-/obj/item/mixing_bowl/wash(mob/user, atom/source)
-	if(..())
+/obj/item/mixing_bowl/wash_tg(clean_types)
+	. = ..()
+
+	if(.)
 		clean()
-		update_dialog(user)
+		update_dialog(usr)
 
 /obj/item/mixing_bowl/proc/fail(obj/source)
 	if(!source)

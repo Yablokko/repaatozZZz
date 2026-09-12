@@ -274,6 +274,7 @@
 		chat_message_type = MESSAGE_TYPE_COMBAT
 	)
 	affected.open = ORGAN_ORGANIC_OPEN
+	affected.owner.add_bleeding_bodypart(affected)
 
 	return SURGERY_STEP_CONTINUE
 
@@ -291,12 +292,12 @@
 	name = "обработка омертвелых тканей"
 	allowed_tools = list(
 		/obj/item/reagent_containers/dropper = 100,
-		/obj/item/reagent_containers/glass/bottle = 90,
-		/obj/item/reagent_containers/food/drinks/drinkingglass = 85,
-		/obj/item/reagent_containers/food/drinks/bottle = 80,
-		/obj/item/reagent_containers/glass/beaker = 75,
+		/obj/item/reagent_containers/cup/bottle = 90,
+		/obj/item/reagent_containers/cup/glass/drinkingglass = 85,
+		/obj/item/reagent_containers/cup/glass/bottle = 80,
+		/obj/item/reagent_containers/cup/beaker = 75,
 		/obj/item/reagent_containers/spray = 60,
-		/obj/item/reagent_containers/glass/bucket = 50,
+		/obj/item/reagent_containers/cup/bucket = 50,
 	)
 
 	time = 2.4 SECONDS
@@ -357,7 +358,7 @@
 /datum/surgery_step/treat_necrosis/fail_step(mob/living/user, mob/living/carbon/human/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	var/obj/item/organ/external/affected = target.get_organ(target_zone)
 
-	if(!istype(tool, /obj/item/reagent_containers))
+	if(!is_reagent_container(tool))
 		return SURGERY_STEP_INCOMPLETE
 
 	var/obj/item/reagent_containers/container = tool

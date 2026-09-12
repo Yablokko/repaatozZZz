@@ -62,7 +62,7 @@
 /mob/living/simple_animal/hostile/mimic/crate/DestroyPathToTarget()
 	..()
 	if(prob(90))
-		icon_state = "[initial(icon_state)]open"
+		icon_state = "[initial(icon_state)]_open"
 	else
 		icon_state = initial(icon_state)
 
@@ -246,7 +246,7 @@ GLOBAL_LIST_INIT(protected_objects, list(/obj/structure/table, /obj/structure/ca
 			Pewgun = G
 			var/obj/item/ammo_box/magazine/M = Pewgun.mag_type
 			casingtype = initial(M.ammo_type)
-		if(istype(G, /obj/item/gun/energy))
+		if(isenergygun(G))
 			Zapgun = G
 			var/selectfiresetting = Zapgun.select
 			var/obj/item/ammo_casing/energy/E = Zapgun.ammo_type[selectfiresetting]
